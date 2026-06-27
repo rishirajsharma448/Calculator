@@ -9,114 +9,225 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    font-family: 'Courier New', monospace;
+    padding: 20px;
 }
 
-.calculator {
-    background: white;
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    width: 100%;
-    max-width: 400px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    animation: slideIn 0.5s ease-out;
 }
 
-.display {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
-    border-bottom: 5px solid #764ba2;
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-#result {
-    width: 100%;
-    padding: 20px;
+h1 {
+    text-align: center;
+    color: #1e3c72;
+    margin-bottom: 30px;
     font-size: 2.5rem;
-    text-align: right;
-    border: none;
-    background: transparent;
-    color: white;
-    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#result::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+.timezone-selector {
+    display: flex;
     gap: 10px;
-    padding: 20px;
-    background: #f5f5f5;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
-.btn {
-    padding: 20px;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+.timezone-selector label {
+    font-weight: bold;
+    color: #1e3c72;
+    font-size: 1rem;
+}
+
+.timezone-selector select {
+    padding: 10px 15px;
+    border: 2px solid #2a5298;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
     background: white;
     color: #333;
-    font-weight: 600;
+    cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
 }
 
-.btn:active {
-    transform: scale(0.95);
+.timezone-selector select:hover {
+    border-color: #1e3c72;
+    box-shadow: 0 4px 12px rgba(30, 60, 114, 0.2);
 }
 
-.btn:hover:not(.equals) {
-    background: #f0f0f0;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.timezone-selector select:focus {
+    outline: none;
+    border-color: #1e3c72;
+    box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
 }
 
-.btn.operator {
+#addBtn {
+    padding: 10px 25px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-.btn.operator:hover {
-    background: linear-gradient(135deg, #5568d3 0%, #6a3a91 100%);
+#addBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
-.btn.clear {
-    background: #ff6b6b;
+#addBtn:active {
+    transform: translateY(0);
+}
+
+.clocks-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    min-height: 150px;
+}
+
+.clock {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    animation: clockAppear 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes clockAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.clock::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.clock-content {
+    position: relative;
+    z-index: 1;
+}
+
+.timezone-name {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.time-display {
+    font-size: 2.5rem;
     color: white;
-    grid-column: 1;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-variant-numeric: tabular-nums;
 }
 
-.btn.clear:hover {
-    background: #ff5252;
+.date-display {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    margin-top: 10px;
 }
 
-.btn.equals {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+.remove-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.2);
     color: white;
-    grid-column: 3 / 5;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
-.btn.equals:hover {
-    background: linear-gradient(135deg, #0f8a75 0%, #2ecd6a 100%);
+.remove-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
-.btn.zero {
-    grid-column: 1 / 3;
+.empty-message {
+    text-align: center;
+    color: #999;
+    font-size: 1.2rem;
+    padding: 40px 20px;
+    grid-column: 1 / -1;
 }
 
-@media (max-width: 480px) {
-    .calculator {
-        max-width: 90%;
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
     }
     
-    .btn {
-        padding: 15px;
-        font-size: 1.2rem;
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
     }
     
-    #result {
+    .timezone-selector {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .timezone-selector select {
+        width: 100%;
+    }
+    
+    #addBtn {
+        width: 100%;
+    }
+    
+    .clocks-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .time-display {
         font-size: 2rem;
     }
 }
